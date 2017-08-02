@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LIFX Color Cycle</title>
+</head>
+<body>
+	<form action="PUT">
+		<div>
+			<input
+				id="apiToken"
+				name="apiToken"
+				placeholder="LIFX API Token"
+				type="password"
+				required
+			>
+		</div>
+
+		<div>
+			<select
+				id="selectorType"
+				name="selectorType"
+				required
+			>
+				<option value="group" default>Group</option>
+				<option value="light">Light</option>
+			</select>
+
+			<input
+				id="selectorName"
+				name="selectorName"
+				placeholder="Name (case-sensitive)"
+				type="text"
+				required
+			>
+		</div>
+
+		<div>
+			<label for="cycles">
+				Number of Full Color Cycles
+				<input
+					id="cycles"
+					name="cycles"
+					placeholder="(Default: 1)"
+					type="number"
+				>
+			</label>
+		</div>
+
+		<div>
+			<label for="duration">
+				Time Between Changes in Seconds
+				<input
+					id="duration"
+					name="duration"
+					placeholder="(Default: 0.5)"
+					type="text"
+				>
+			</label>
+		</div>
+
+		<div>
+			<label for="hueDelta">
+				Hue Jump per Change
+				<input
+					id="hueDelta"
+					name="hueDelta"
+					placeholder="(Default: 10)"
+					type="number"
+				>
+			</label>
+		</div>
+
+		<div>
+			<label for="brightness">
+				Brightness (0.00 - 1.00)
+				<input
+					id="brightness"
+					name="brightness"
+					placeholder="(Default: 1.00)"
+					type="text"
+				>
+			</label>
+		</div>
+
+		<div>
+			<label for="saturation">
+				Saturation (0.00 - 1.00)
+				<input
+					id="saturation"
+					name="saturation"
+					placeholder="(Default: 1.00)"
+					type="text"
+				>
+			</label>
+		</div>
+
+		<div>
+			<button>Submit</button>
+		</div>
+	</form>
+
+	<div
+		id="message"
+		style="padding: 10px 5px; color: white; background: purple"
+	></div>
+
+	<script>
+		var getFieldValue = function(fieldName) {
+			return document.querySelector('[name=' + fieldName + ']').value || undefined
+		}
+
+		var populateMessage = function(message) {
+			return function() {
+				document
+				.querySelector('#message')
+				.textContent = message
+			}
+		}
+
+		var onSubmit = function(event) {
+			event.preventDefault()
+
+			var selectorName = getFieldValue('selectorName')
+			var selectorType = getFieldValue('selectorType')
+
+			var body = (
+				JSON.stringify({
+					apiToken: getFieldValue('apiToken'),
+					brightness: getFieldValue('brightness'),
+					cycles: getFieldValue('cycles'),
+					saturation: getFieldValue('saturation'),
+				})
+			)
+
+			fetch(
+				'/api/cycle-colors/' + selectorType + ':' + selectorName,
+				{
+					body: body,
+					headers: { 'Content-Type': 'application/json' },
+					method: 'PUT',
+				}
+			)
+			.then(populateMessage('Everything Worked'))
+			.catch(function(err) { populateMessage(err)() })
+		}
+
+		window.onload = function() {
+			document
+			.querySelector('form')
+			.addEventListener('submit', onSubmit)
+		}
+	</script>
+</body>
+</html>
