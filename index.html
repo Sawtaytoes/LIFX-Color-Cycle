@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>LIFX Color Cycle</title>
+</head>
+<body>
+	<form action="PUT">
+		<div>
+			<input
+				id="apiToken"
+				name="apiToken"
+				placeholder="LIFX API Token"
+				type="text"
+				required
+			>
+		</div>
+
+		<div>
+			<select
+				id="selectorType"
+				name="selectorType"
+				required
+			>
+				<option value="group" default>Group</option>
+				<option value="light">Light</option>
+			</select>
+
+			<input
+				id="selectorName"
+				name="selectorName"
+				placeholder="Name (case-sensitive)"
+				type="text"
+				required
+			>
+		</div>
+
+		<div>
+			<input
+				id="cycles"
+				name="cycles"
+				placeholder="Full Color Cycle Iterations"
+				type="number"
+			>
+
+			<input
+				id="brightness"
+				name="brightness"
+				placeholder="Brightness (0 - 1)"
+				type="number"
+			>
+
+			<input
+				id="saturation"
+				name="saturation"
+				placeholder="Saturation (0 - 1)"
+				type="number"
+			>
+		</div>
+
+		<div>
+			<button>Submit</button>
+		</div>
+	</form>
+
+	<div
+		id="message"
+		style="padding: 10px 5px; color: white; background: purple"
+	></div>
+
+	<script>
+		var getFieldValue = function(fieldName) {
+			return document.querySelector('[name=' + fieldName + ']').value || undefined
+		}
+
+		var populateMessage = function(message) {
+			return function() {
+				document
+				.querySelector('#message')
+				.textContent = message
+			}
+		}
+
+		var onSubmit = function(event) {
+			event.preventDefault()
+
+			var selectorName = getFieldValue('selectorName')
+			var selectorType = getFieldValue('selectorType')
+
+			var body = (
+				JSON.stringify({
+					apiToken: getFieldValue('apiToken'),
+					brightness: getFieldValue('brightness'),
+					cycles: getFieldValue('cycles'),
+					saturation: getFieldValue('saturation'),
+				})
+			)
+
+			fetch(
+				'/api/cycle-colors/' + selectorType + ':' + selectorName,
+				{
+					body: body,
+					headers: { 'Content-Type': 'application/json' },
+					method: 'PUT',
+				}
+			)
+			.then(populateMessage('Everything Worked'))
+			.catch(function(err) { populateMessage(err)() })
+		}
+
+		window.onload = function() {
+			document
+			.querySelector('form')
+			.addEventListener('submit', onSubmit)
+		}
+	</script>
+</body>
+</html>
