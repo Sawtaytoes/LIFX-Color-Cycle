@@ -6,9 +6,6 @@ const logger = require(`${dir.utils}logger`)
 
 const LIFX_API = 'https://api.lifx.com/'
 
-const hueDelta = 10
-const numberOfTransitions = 360 / hueDelta
-
 const changeHueByDelta = ({
 	duration,
 	headers,
@@ -59,12 +56,14 @@ module.exports = ({
 	brightness = 1,
 	cycles = 1,
 	duration = 0.5,
+	hueDelta = 10,
 	saturation = 1,
 	selector = '',
 }) => {
 	console.log('apiToken', apiToken);
 	logger.log(`Command: Cycle Colors => ${selector} for ${duration}`)
 
+	const numberOfTransitions = 360 / hueDelta
 	const durationInMilliseconds = duration * 1000
 	const headers = getHeaders(apiToken)
 
