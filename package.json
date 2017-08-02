@@ -8,11 +8,17 @@
     "start": "npm run api"
   },
   "engines": {
-    "node": "8.1.4",
-    "npm": "5.0.3"
+    "node": "8.2.1",
+    "npm": "5.3.0"
   },
   "dependencies": {
     "bluebird": "^3.5.0",
+    "body-parser": "^1.17.2",
+    "compression": "^1.7.0",
+    "cors": "^2.8.4",
+    "express": "^4.15.3",
+    "fs": "^0.0.1-security",
+    "helmet": "^3.8.1",
     "node-fetch": "^1.7.1",
     "nodemon": "^1.11.0"
   }
