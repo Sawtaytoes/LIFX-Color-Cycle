@@ -19,7 +19,6 @@ serverSettings.get(
 serverSettings.put(
 	'/api/cycle-colors/:selector',
 	({ body, params }, res ) => (
-		console.log(body, params) ||
 		res.send(
 			cycleColors(
 				Object.assign(
