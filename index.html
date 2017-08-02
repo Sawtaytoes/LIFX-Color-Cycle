@@ -35,26 +35,63 @@
 		</div>
 
 		<div>
-			<input
-				id="cycles"
-				name="cycles"
-				placeholder="Full Color Cycle Iterations"
-				type="number"
-			>
+			<label for="cycles">
+				Number of Full Color Cycles
+				<input
+					id="cycles"
+					name="cycles"
+					placeholder="(Default: 1)"
+					type="number"
+				>
+			</label>
+		</div>
 
-			<input
-				id="brightness"
-				name="brightness"
-				placeholder="Brightness (0 - 1)"
-				type="number"
-			>
+		<div>
+			<label for="duration">
+				Time Between Changes in Seconds
+				<input
+					id="duration"
+					name="duration"
+					placeholder="(Default: 0.5)"
+					type="text"
+				>
+			</label>
+		</div>
 
-			<input
-				id="saturation"
-				name="saturation"
-				placeholder="Saturation (0 - 1)"
-				type="number"
-			>
+		<div>
+			<label for="hueDelta">
+				Hue Jump per Change
+				<input
+					id="hueDelta"
+					name="hueDelta"
+					placeholder="(Default: 10)"
+					type="number"
+				>
+			</label>
+		</div>
+
+		<div>
+			<label for="brightness">
+				Brightness (0.00 - 1.00)
+				<input
+					id="brightness"
+					name="brightness"
+					placeholder="(Default: 1.00)"
+					type="text"
+				>
+			</label>
+		</div>
+
+		<div>
+			<label for="saturation">
+				Saturation (0.00 - 1.00)
+				<input
+					id="saturation"
+					name="saturation"
+					placeholder="(Default: 1.00)"
+					type="text"
+				>
+			</label>
 		</div>
 
 		<div>
