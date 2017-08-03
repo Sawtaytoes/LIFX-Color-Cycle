@@ -69,7 +69,7 @@ module.exports = ({
 
 	const initialSettings = {
 		brightness,
-		color: `hue:0 saturation:${saturation}`,
+		color: `saturation:${saturation}`,
 		duration: 0,
 		power: 'on',
 	}
@@ -113,7 +113,5 @@ module.exports = ({
 	.then(resetToInitialState)
 	.delay(50)
 	.then(setHueDelta(numberOfTransitions * cycles))
-	.delay(50)
-	.then(resetToInitialState)
 	.catch(logger.logError)
 }
