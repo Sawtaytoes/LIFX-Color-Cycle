@@ -21,8 +21,9 @@
 				name="selectorType"
 				required
 			>
+				<option value="all">All</option>
 				<option value="group" default>Group</option>
-				<option value="light">Light</option>
+				<option value="label">Light</option>
 			</select>
 
 			<input
@@ -30,7 +31,6 @@
 				name="selectorName"
 				placeholder="Name (case-sensitive)"
 				type="text"
-				required
 			>
 		</div>
 
@@ -122,6 +122,15 @@
 
 			var selectorName = getFieldValue('selectorName')
 			var selectorType = getFieldValue('selectorType')
+			var fetchUri = (
+				'/api/cycle-colors/'
+				+ selectorType
+				+ (
+					selectorType !== 'all'
+					? selectorType + ':' + selectorName
+					: ''
+				)
+			)
 
 			var body = (
 				JSON.stringify({
@@ -134,7 +143,7 @@
 			)
 
 			fetch(
-				'/api/cycle-colors/' + selectorType + ':' + selectorName,
+				fetchUri,
 				{
 					body: body,
 					headers: { 'Content-Type': 'application/json' },
