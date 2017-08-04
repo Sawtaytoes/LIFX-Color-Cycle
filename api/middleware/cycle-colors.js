@@ -60,7 +60,6 @@ module.exports = ({
 	saturation = 1,
 	selector = '',
 }) => {
-	console.log('apiToken', apiToken);
 	logger.log(`Command: Cycle Colors => ${selector} for ${duration}`)
 
 	const numberOfTransitions = 360 / hueDelta
