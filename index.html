@@ -3,10 +3,23 @@
 <head>
 	<title>LIFX Color Cycle</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		html,
+		body,
+		input {
+			font-family: sans-serif;
+			font-size: 120%;
+		}
+
+		.input-group {
+			display: block;
+			margin-bottom: 0.5em;
+		}
+	</style>
 </head>
 <body>
 	<form action="PUT">
-		<div>
+		<div class="input-group">
 			<input
 				id="apiToken"
 				name="apiToken"
@@ -16,7 +29,7 @@
 			>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<select
 				id="selectorType"
 				name="selectorType"
@@ -35,7 +48,7 @@
 			>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="cycles">
 				Number of Full Color Cycles
 				<input
@@ -47,7 +60,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="duration">
 				Time Between Changes in Seconds
 				<input
@@ -59,7 +72,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="hueDelta">
 				Hue Jump per Change
 				<input
@@ -71,7 +84,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="brightness">
 				Brightness (0.00 - 1.00)
 				<input
@@ -83,7 +96,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="saturation">
 				Saturation (0.00 - 1.00)
 				<input
@@ -95,7 +108,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<button>Submit</button>
 		</div>
 	</form>
