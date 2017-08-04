@@ -60,12 +60,12 @@ module.exports = ({
 	saturation = 1,
 	selector = '',
 }) => {
-	console.log('apiToken', apiToken);
 	logger.log(`Command: Cycle Colors => ${selector} for ${duration}`)
 
-	const numberOfTransitions = 360 / hueDelta
 	const durationInMilliseconds = duration * 1000
+	const encodedSelector = encodeURIComponent(selector)
 	const headers = getHeaders(apiToken)
+	const numberOfTransitions = 360 / hueDelta
 
 	const initialSettings = {
 		brightness,
@@ -79,7 +79,7 @@ module.exports = ({
 			duration,
 			headers,
 			hueDelta,
-			selector,
+			selector: encodedSelector,
 		})
 	)
 
@@ -105,7 +105,7 @@ module.exports = ({
 		setInitialState({
 			headers,
 			initialSettings,
-			selector,
+			selector: encodedSelector,
 		})
 	)
 

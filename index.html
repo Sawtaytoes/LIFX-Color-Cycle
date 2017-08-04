@@ -2,10 +2,24 @@
 <html>
 <head>
 	<title>LIFX Color Cycle</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<style>
+		html,
+		body,
+		input {
+			font-family: sans-serif;
+			font-size: 120%;
+		}
+
+		.input-group {
+			display: block;
+			margin-bottom: 0.5em;
+		}
+	</style>
 </head>
 <body>
 	<form action="PUT">
-		<div>
+		<div class="input-group">
 			<input
 				id="apiToken"
 				name="apiToken"
@@ -15,14 +29,14 @@
 			>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<select
 				id="selectorType"
 				name="selectorType"
 				required
 			>
 				<option value="all">All</option>
-				<option value="group" default>Group</option>
+				<option value="group" selected>Group</option>
 				<option value="label">Light</option>
 			</select>
 
@@ -34,7 +48,7 @@
 			>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="cycles">
 				Number of Full Color Cycles
 				<input
@@ -46,7 +60,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="duration">
 				Time Between Changes in Seconds
 				<input
@@ -58,7 +72,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="hueDelta">
 				Hue Jump per Change
 				<input
@@ -70,7 +84,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="brightness">
 				Brightness (0.00 - 1.00)
 				<input
@@ -82,7 +96,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<label for="saturation">
 				Saturation (0.00 - 1.00)
 				<input
@@ -94,7 +108,7 @@
 			</label>
 		</div>
 
-		<div>
+		<div class="input-group">
 			<button>Submit</button>
 		</div>
 	</form>
@@ -104,9 +118,17 @@
 		style="padding: 10px 5px; color: white; background: purple"
 	></div>
 
-	<script>
+	<script async>
+		var getFieldNode = function(fieldName) {
+			return document.querySelector('[name=' + fieldName + ']')
+		}
+
 		var getFieldValue = function(fieldName) {
-			return document.querySelector('[name=' + fieldName + ']').value || undefined
+			return getFieldNode(fieldName).value || undefined
+		}
+
+		var setFieldValue = function(fieldName, value) {
+			return getFieldNode(fieldName).value = value || ''
 		}
 
 		var populateMessage = function(message) {
@@ -120,24 +142,29 @@
 		var onSubmit = function(event) {
 			event.preventDefault()
 
+			var apiToken = getFieldValue('apiToken')
 			var selectorName = getFieldValue('selectorName')
 			var selectorType = getFieldValue('selectorType')
+
+			localStorage.setItem('apiToken', apiToken)
+
 			var fetchUri = (
 				'/api/cycle-colors/'
 				+ selectorType
 				+ (
 					selectorType !== 'all'
-					? selectorType + ':' + selectorName
+					? ':' + selectorName
 					: ''
 				)
 			)
 
 			var body = (
 				JSON.stringify({
-					apiToken: getFieldValue('apiToken'),
+					apiToken: apiToken,
 					brightness: getFieldValue('brightness'),
 					cycles: getFieldValue('cycles'),
 					duration: getFieldValue('duration'),
+					hueDelta: getFieldValue('hueDelta'),
 					saturation: getFieldValue('saturation'),
 				})
 			)
@@ -155,6 +182,8 @@
 		}
 
 		window.onload = function() {
+			setFieldValue('apiToken', localStorage.getItem('apiToken'))
+
 			document
 			.querySelector('form')
 			.addEventListener('submit', onSubmit)
