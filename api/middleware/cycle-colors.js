@@ -62,7 +62,6 @@ module.exports = ({
 }) => {
 	logger.log(`Command: Cycle Colors => ${selector} for ${duration}`)
 
-	const durationInSeconds = Number(duration)
 	const durationInMilliseconds = duration * 1000
 	const encodedSelector = encodeURIComponent(selector)
 	const headers = getHeaders(apiToken)
@@ -77,7 +76,7 @@ module.exports = ({
 
 	const changeHue = (
 		changeHueByDelta({
-			duration: durationInSeconds,
+			duration,
 			headers,
 			hueDelta,
 			selector: encodedSelector,
