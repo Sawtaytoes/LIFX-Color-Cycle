@@ -106,8 +106,16 @@
 	></div>
 
 	<script>
+		var getFieldNode = function(fieldName) {
+			return document.querySelector('[name=' + fieldName + ']')
+		}
+
 		var getFieldValue = function(fieldName) {
-			return document.querySelector('[name=' + fieldName + ']').value || undefined
+			return getFieldNode(fieldName).value || undefined
+		}
+
+		var setFieldValue = function(fieldName, value) {
+			return getFieldNode(fieldName).value = value || ''
 		}
 
 		var populateMessage = function(message) {
@@ -121,8 +129,12 @@
 		var onSubmit = function(event) {
 			event.preventDefault()
 
+			var apiToken = getFieldValue('apiToken')
 			var selectorName = getFieldValue('selectorName')
 			var selectorType = getFieldValue('selectorType')
+
+			localStorage.setItem('apiToken', apiToken)
+
 			var fetchUri = (
 				'/api/cycle-colors/'
 				+ selectorType
@@ -135,7 +147,7 @@
 
 			var body = (
 				JSON.stringify({
-					apiToken: getFieldValue('apiToken'),
+					apiToken: apiToken,
 					brightness: getFieldValue('brightness'),
 					cycles: getFieldValue('cycles'),
 					duration: getFieldValue('duration'),
@@ -157,6 +169,8 @@
 		}
 
 		window.onload = function() {
+			setFieldValue('apiToken', localStorage.getItem('apiToken'))
+
 			document
 			.querySelector('form')
 			.addEventListener('submit', onSubmit)
